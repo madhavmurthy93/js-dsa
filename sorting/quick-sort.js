@@ -1,7 +1,5 @@
 function quickSort(arr) {
     function partition(arr) {
-        if (arr.length <= 1) return;
-
         let start = 0;
         let pivot = arr[start];
         let bound = start + 1;
