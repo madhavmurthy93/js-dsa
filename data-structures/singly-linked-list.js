@@ -75,6 +75,20 @@ class SinglyLinkedList {
         return node;
     }
 
+    unshift(value) {
+        let node = new Node(value);
+        if (this._length === 0) {
+            this._head = node;
+            this._tail = node;
+        } else {
+            let currentHead = this._head;
+            this._head = node;
+            node.next = currentHead;
+        }
+        this._length++;
+        return this;
+    }
+
     shift() {
         if (!this._head) return undefined;
 
@@ -88,20 +102,6 @@ class SinglyLinkedList {
         }
         this._length--;
         return current;
-    }
-
-    unshift(value) {
-        let node = new Node(value);
-        if (this._length === 0) {
-            this._head = node;
-            this._tail = node;
-        } else {
-            let currentHead = this._head;
-            this._head = node;
-            node.next = currentHead;
-        }
-        this._length++;
-        return this;
     }
 
     get(index) {
