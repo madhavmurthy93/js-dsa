@@ -9,6 +9,10 @@ class Node {
         return this._value;
     }
 
+    set value(value) {
+        this._value = value;
+    }
+
     get left() {
         return this._left;
     }
@@ -76,7 +80,43 @@ class BinarySearchTree {
     }
 
     delete(value) {
+        let [node, isDeleted] = helperRecursive(this._root, value);
+        this._root = node;
+        return isDeleted;
 
+        function helperRecursive(node, value) {
+            if (node === null) {
+                return [node, false];
+            } else if (value < node.value) {
+                let [left, isDeleted] = helperRecursive(node.left, value);
+                node.left = left;
+                return [node, isDeleted];
+            } else if (value > node.value) {
+                let [right, isDeleted] = helperRecursive(node.right, value);
+                node.right = right;
+                return [node, isDeleted];
+            } else {
+                if (node.left === null) {
+                    return [node.right, true];
+                } else if (node. right === null) {
+                    return [node.left, true];
+                } else {
+                    let temp = minNode(node.right);
+                    node.value = temp.value;
+                    let [right, isDeleted] = helperRecursive(node.right, temp.value);
+                    node.right = right;
+                    return [node, true];
+                }
+            }  
+        }
+
+        function minNode(node) {
+            let current = node;
+            while (current.left != null) {
+                current = current.left;
+            }
+            return current;
+        }
     }
 
     find(value) {
@@ -149,6 +189,10 @@ class BinarySearchTree {
         }
     }
 
+    get root() {
+        return this._root;
+    }
+
 }
 
 let bst = new BinarySearchTree();
@@ -168,3 +212,13 @@ console.log('FIND 34', bst.find(34));
 console.log('MIN', bst.min());
 console.log('MAX', bst.max());
 console.log('HEIGHT', bst.height());
+console.log('DELETE 450', bst.delete(450));
+console.log('TREE', bst.root);
+console.log('DELETE 562', bst.delete(562));
+console.log('TREE', bst.root);
+console.log('DELETE 4', bst.delete(4));
+console.log('TREE', bst.root);
+console.log('DELETE 1', bst.delete(1));
+console.log('TREE', bst.root);
+console.log('DELETE 223', bst.delete(223));
+console.log('TREE', bst.root);
