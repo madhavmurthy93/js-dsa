@@ -110,15 +110,43 @@ class BinarySearchTree {
     }
 
     min() {
-
+        if (this._root === null) return undefined;
+        let current = this._root;
+        while (current.left != null) {
+            current = current.left;
+        }
+        return current.value;
     }
 
     max() {
-
+        if (this._root === null) return undefined;
+        let current = this._root;
+        while (current.right != null) {
+            current = current.right;
+        }
+        return current.value;
     }
 
     height() {
+        return helperIterative(this._root);
 
+        function helperRecursive(node) {
+            if (node === null) return -1;
+            return 1 + Math.max(helperRecursive(node.left), helperRecursive(node.right));
+        }
+
+        function helperIterative(node) {
+            if (node === null) return -1;
+            let queue = [[node, 0]];
+            let height = 0;
+            while (queue.length > 0) {
+                let [node, depth] = queue.shift();
+                height = Math.max(height, depth);
+                if (node.left) queue.push([node.left, depth + 1]);
+                if (node.right) queue.push([node.right, depth + 1]);
+            }
+            return height;
+        }
     }
 
 }
@@ -137,3 +165,6 @@ console.log('FIND 223', bst.find(223));
 console.log('FIND 65', bst.find(65));
 console.log('FIND 4', bst.find(4));
 console.log('FIND 34', bst.find(34));
+console.log('MIN', bst.min());
+console.log('MAX', bst.max());
+console.log('HEIGHT', bst.height());
