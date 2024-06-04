@@ -189,6 +189,66 @@ class BinarySearchTree {
         }
     }
 
+    bfs() {
+        return helperIterative(this._root);
+
+        function helperIterative(node) {
+            if (node === null) return [];
+            let queue = [node];
+            let result = [];
+            while (queue.length > 0) {
+                let queueNode = queue.shift();
+                result.push(queueNode.value);
+                if (queueNode.left) queue.push(queueNode.left);
+                if (queueNode.right) queue.push(queueNode.right);
+            }
+            return result;
+        }
+    }
+
+    dfsPreorder() {
+        let result = [];
+        helperRecursive(this._root, result);
+        return result;
+
+        function helperRecursive(node, result) {
+            if (node === null) return;
+
+            result.push(node.value);
+            helperRecursive(node.left, result);
+            helperRecursive(node.right, result);
+        }
+    }
+
+    dfsPostorder() {
+        let result = [];
+        helperRecursive(this._root, result);
+        return result;
+
+        function helperRecursive(node, result) {
+            if (node === null) return;
+
+            helperRecursive(node.left, result);
+            helperRecursive(node.right, result);
+            result.push(node.value);
+        }
+
+    }
+
+    dfsInorder() {
+        let result = [];
+        helperRecursive(this._root, result);
+        return result;
+
+        function helperRecursive(node, result) {
+            if (node === null) return;
+
+            helperRecursive(node.left, result);
+            result.push(node.value);
+            helperRecursive(node.right, result);
+        }
+    }
+
     get root() {
         return this._root;
     }
@@ -212,6 +272,10 @@ console.log('FIND 34', bst.find(34));
 console.log('MIN', bst.min());
 console.log('MAX', bst.max());
 console.log('HEIGHT', bst.height());
+console.log('BFS', bst.bfs());
+console.log('DFS PreOrder', bst.dfsPreorder());
+console.log('DFS PostOrder', bst.dfsPostorder());
+console.log('DFS InOrder', bst.dfsInorder());
 console.log('DELETE 450', bst.delete(450));
 console.log('TREE', bst.root);
 console.log('DELETE 562', bst.delete(562));
