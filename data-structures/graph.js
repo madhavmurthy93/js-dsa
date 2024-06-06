@@ -38,6 +38,60 @@ class Graph {
         this._graph[b] = this._graph[b].filter(item => item != a);
         return true;
     }
+
+    dfs(a) {
+        let visited = {};
+        let results = [];
+        let graph = this._graph;
+        helperIterative(a);
+        return results;
+
+        function helperRecursive(a) {
+            if (!a) return;
+
+            results.push(a);
+            visited[a] = true;
+            for (let v of graph[a]) {
+                if (!visited[v]) helperRecursive(v);
+            }
+        }
+
+        function helperIterative(a) {
+            if (!a) return;
+
+            let stack = [a];
+            while (stack.length > 0) {
+                let v = stack.pop();
+                if (!visited[v]) {
+                    results.push(v);
+                    visited[v] = true;
+                    graph[v].forEach(n => stack.push(n));
+                }
+            }
+        }
+    }
+
+    bfs(a) {
+        let visited = {};
+        let results = [];
+        let graph = this._graph;
+        helperIterative(a);
+        return results;
+
+        function helperIterative(a) {
+            if (!a) return;
+
+            let queue = [a];
+            while (queue.length > 0) {
+                let v = queue.shift();
+                if (!visited[v]) {
+                    results.push(v);
+                    visited[v] = true;
+                    graph[v].forEach(n => queue.push(n));
+                }
+            }
+        }
+    }
 }
 
 let graph = new Graph();
@@ -68,3 +122,5 @@ console.log('REMOVE EDGE Madhav Arjun', graph.removeEdge('Madhav', 'Arjun'));
 console.log('GRAPH', graph.graph);
 console.log('REMOVE VERTEX Shashank', graph.removeVertex('Shashank'));
 console.log('GRAPH', graph.graph);
+console.log('DFS', graph.dfs('Madhav'));
+console.log('BFS', graph.bfs('Madhav'));
