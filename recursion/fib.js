@@ -9,7 +9,19 @@ function fib(num, memo=[]) {
     return res;
 }
 
+function fibTable(n) {
+    if (n <= 2) return 1;
+    let fibNums = [0, 1, 1];
+    for (let i = 3; i <= n; i++) {
+        fibNums[i] = fibNums[i - 1] + fibNums[i - 2];
+    }
+    return fibNums[n];
+}
+
 console.log(fib(4));
 console.log(fib(10));
 console.log(fib(40));
 console.log(fib(100));
+console.log(fibTable(100));
+console.log(fibTable(100000));
+// console.log(fib(100000)); Maximum call stack size exceeded error
